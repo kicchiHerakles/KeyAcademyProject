@@ -11,10 +11,9 @@ import org.junit.runner.RunWith;
                 "rerun:target/rerun.txt"},
         features = "src/test/resources/features/ui",
         glue = "com/theherakles/keyacademy/step_definitions/ui",
-        dryRun = true,
+        dryRun = false,
         tags = ""
 )
 public class UICukesRunner {
-
 
 }

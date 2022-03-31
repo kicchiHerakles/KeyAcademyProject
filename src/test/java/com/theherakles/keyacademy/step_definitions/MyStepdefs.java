@@ -8,4 +8,9 @@ public class MyStepdefs {
   public void justPrint() {
     System.out.println("Herakles");
   }
+
+  @Given("print ahaha")
+  public void printAhaha() {
+    System.out.println("ahaha");
+  }
 }

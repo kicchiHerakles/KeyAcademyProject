@@ -12,7 +12,8 @@ public enum BrowserType {
     FIREFOX_HEADLESS(5, "firefox-headless"),
     INTERNET_EXPLORER(6, "internet-explorer"),
     EDGE(7, "edge"),
-    SAFARI(8, "safari");
+    SAFARI(8, "safari"),
+    BS_DESKTOP_CHROME(9, "bs-desktop-chrome");
 
     private int typeId;
     private String name;

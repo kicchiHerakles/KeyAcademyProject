@@ -1,8 +1,16 @@
-Feature: sample print
+Feature: Home Page Element Validations
 
-  Scenario: sample print
-    Given just print
+  Background:
+    Given Home page is loaded
 
-    @ahaha
-    Scenario: ahaha
-      Given print ahaha
+#  @HOME1
+#  Scenario:
+#    Then user should see the following menus in the navigation bar
+#      |Courses|
+#      |       Services|
+#      |       About Us|
+#      |       Contact|
+
+    @HOME2
+    Scenario:
+      Then page title should be "KEY ACADEMY"

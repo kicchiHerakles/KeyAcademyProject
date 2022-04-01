@@ -4,13 +4,5 @@ import io.cucumber.java.en.Given;
 
 public class MyStepdefs {
 
-  @Given("just print")
-  public void justPrint() {
-    System.out.println("Herakles");
-  }
 
-  @Given("print ahaha")
-  public void printAhaha() {
-    System.out.println("ahaha");
-  }
 }

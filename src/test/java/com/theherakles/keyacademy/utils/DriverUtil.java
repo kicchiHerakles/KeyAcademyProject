@@ -35,72 +35,105 @@ public class DriverUtil {
     public static WebDriver getDriver() {
         try {
             if (driverPool.get() == null) {
-                BrowserType browserType = null;
+                BrowserType browserType = ConfigurationReaderUtil.getConfiguration().getBrowserType();
                 if (System.getProperty("browser") != null)
                     browserType = BrowserType.getByName(System.getProperty("browser"));
-                else
-                    browserType = ConfigurationReaderUtil.getConfiguration().getBrowserType();
 
-                switch (browserType) {
-                    case CHROME:
-                        WebDriverManager.chromedriver().setup();
-                        driverPool.set(new ChromeDriver());
-                        break;
-                    case CHROME_HEADLESS:
-                        WebDriverManager.chromedriver().setup();
-                        driverPool.set(new ChromeDriver(new ChromeOptions().setHeadless(true)));
-                        break;
-                    case FIREFOX:
-                        WebDriverManager.firefoxdriver().setup();
-                        driverPool.set(new FirefoxDriver());
-                        break;
-                    case FIREFOX_HEADLESS:
-                        WebDriverManager.firefoxdriver().setup();
-                        driverPool.set(new FirefoxDriver(new FirefoxOptions().setHeadless(true)));
-                        break;
-                    case INTERNET_EXPLORER:
-                        if (!System.getProperty("os.name").toLowerCase().contains("windows"))
-                            throw new AutomationException("Your OS doesn't support Internet Explorer");
-                        WebDriverManager.iedriver().setup();
-                        driverPool.set(new InternetExplorerDriver());
-                        break;
-                    case EDGE:
-                        if (!System.getProperty("os.name").toLowerCase().contains("windows"))
-                            throw new AutomationException("Your OS doesn't support Edge");
-                        WebDriverManager.edgedriver().setup();
-                        driverPool.set(new EdgeDriver());
-                        break;
-                    case SAFARI:
-                        if (!System.getProperty("os.name").toLowerCase().contains("mac"))
-                            throw new AutomationException("Your OS doesn't support Safari");
-                        WebDriverManager.getInstance(SafariDriver.class).setup();
-                        driverPool.set(new SafariDriver());
-                        break;
-                    case CHROME_REMOTE:
-                        ChromeOptions chromeOptions = new ChromeOptions();
-                        chromeOptions.setCapability("platform", Platform.ANY);
-                        driverPool.set(new RemoteWebDriver(new URL(ConfigurationReaderUtil.getConfiguration().getRemoteGridUrl()), chromeOptions));
-                        break;
-                    case BS_DESKTOP_CHROME:
-                        JSONParser parser = new JSONParser();
-                        JSONObject testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_chrome_win10.json"));;
-
-                        DesiredCapabilities capabilities = new DesiredCapabilities(testConfig);
-
-                        HashMap<String, Object> browserstackOptions = new HashMap<String, Object>();
-                        browserstackOptions.put("os", "Windows");
-                        browserstackOptions.put("osVersion", "10");
-
-                        capabilities.setCapability("bstack:options", browserstackOptions);
-                        WebDriver driver = new RemoteWebDriver(new URL("https://hseyinkeeci_OFjRua:QepXX2yWg9cVpc27dGhy@hub-cloud.browserstack.com/wd/hub"), capabilities);
-                        driverPool.set(driver);
-                        break;
+                if (System.getProperty("isLocal") != null && System.getProperty("isLocal").equals("true"))
+                {
+                    switch (browserType) {
+                        case CHROME:
+                            WebDriverManager.chromedriver().setup();
+                            driverPool.set(new ChromeDriver());
+                            break;
+                        case CHROME_HEADLESS:
+                            WebDriverManager.chromedriver().setup();
+                            driverPool.set(new ChromeDriver(new ChromeOptions().setHeadless(true)));
+                            break;
+                        case FIREFOX:
+                            WebDriverManager.firefoxdriver().setup();
+                            driverPool.set(new FirefoxDriver());
+                            break;
+                        case FIREFOX_HEADLESS:
+                            WebDriverManager.firefoxdriver().setup();
+                            driverPool.set(new FirefoxDriver(new FirefoxOptions().setHeadless(true)));
+                            break;
+                        case INTERNET_EXPLORER:
+                            if (!System.getProperty("os.name").toLowerCase().contains("windows"))
+                                throw new AutomationException("Your OS doesn't support Internet Explorer");
+                            WebDriverManager.iedriver().setup();
+                            driverPool.set(new InternetExplorerDriver());
+                            break;
+                        case EDGE:
+                            if (!System.getProperty("os.name").toLowerCase().contains("windows"))
+                                throw new AutomationException("Your OS doesn't support Edge");
+                            WebDriverManager.edgedriver().setup();
+                            driverPool.set(new EdgeDriver());
+                            break;
+                        case SAFARI:
+                            if (!System.getProperty("os.name").toLowerCase().contains("mac"))
+                                throw new AutomationException("Your OS doesn't support Safari");
+                            WebDriverManager.getInstance(SafariDriver.class).setup();
+                            driverPool.set(new SafariDriver());
+                            break;
+                        case CHROME_REMOTE:
+                            ChromeOptions chromeOptions = new ChromeOptions();
+                            chromeOptions.setCapability("platform", Platform.ANY);
+                            driverPool.set(new RemoteWebDriver(new URL(ConfigurationReaderUtil.getConfiguration().getRemoteGridUrl()), chromeOptions));
+                            break;
+                    }
                 }
+                else if (System.getProperty("isRemote") != null && System.getProperty("isRemote").equals("true")){
+                    JSONParser parser = new JSONParser();
+                    JSONObject testConfig = null;
+                    WebDriver driver = null;
+                    DesiredCapabilities capabilities;
+                    HashMap<String, Object> browserstackOptions;
+                    switch (browserType){
+                        case CHROME:
+                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_chrome_win10.json"));
+
+                            capabilities = prepareDesiredCapabilities(testConfig);
+
+                            browserstackOptions = new HashMap<String, Object>();
+                            browserstackOptions.put("os", "Windows");
+                            browserstackOptions.put("osVersion", "10");
+
+                            capabilities.setCapability("bstack:options", browserstackOptions);
+                            driver = new RemoteWebDriver(new URL("https://hseyinkeeci_OFjRua:QepXX2yWg9cVpc27dGhy@hub-cloud.browserstack.com/wd/hub"), capabilities);
+                            driverPool.set(driver);
+                            break;
+                        case FIREFOX:
+                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_firefox_win10.json"));
+
+                            capabilities = prepareDesiredCapabilities(testConfig);
+
+                            browserstackOptions = new HashMap<String, Object>();
+                            browserstackOptions.put("os", "Windows");
+                            browserstackOptions.put("osVersion", "10");
+
+                            capabilities.setCapability("bstack:options", browserstackOptions);
+                            driver = new RemoteWebDriver(new URL("https://hseyinkeeci_OFjRua:QepXX2yWg9cVpc27dGhy@hub-cloud.browserstack.com/wd/hub"), capabilities);
+                            driverPool.set(driver);
+                            break;
+
+                    }
+                }
+                else
+                    throw new AutomationException("Local or remote execution is not specified. Please provide either isLocal or isRemote properties with 'true' value");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return driverPool.get();
+    }
+
+    private static DesiredCapabilities prepareDesiredCapabilities(JSONObject testConfig){
+        DesiredCapabilities capabilities = new DesiredCapabilities(testConfig);
+        capabilities.setCapability("project", ConfigurationReaderUtil.getConfiguration().getProjectName());
+        capabilities.setCapability("build", ConfigurationReaderUtil.getConfiguration().getBuild());
+        capabilities.setCapability("name", "test name");
+        return capabilities;
     }
 
     public static void closeDriver() {

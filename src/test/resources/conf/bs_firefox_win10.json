@@ -1,5 +1,5 @@
 {
-  "browserName": "Chrome",
+  "browserName": "Firefox",
   "browserVersion": "latest",
   "browserstack.debug": "true",
   "browserstack.console": "info",

@@ -10,6 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class ApplicationConfig {
+    @JsonProperty("project-name")
+    private String projectName;
+
+    @JsonProperty("build")
+    private String build;
 
     @JsonProperty("main-page-url")
     private String mainPageUrl;

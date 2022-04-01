@@ -85,6 +85,9 @@ public class DriverUtil {
                         capabilities.setCapability("project", "Key Academy Website v2");//optional
                         capabilities.setCapability("build", "alpha_0.1.7");//optional
                         capabilities.setCapability("name", "Home page title should be 'KEY ACADEMY'");//optional
+                        capabilities.setCapability("browserstack.debug", "true");  // optional - for enabling visual logs
+                        capabilities.setCapability("browserstack.console", "info");  // optional - to enable console logs at the info level. You can also use other log levels here
+                        capabilities.setCapability("browserstack.networkLogs", "true");  // optional - to enable network logs to be logged
 
                         HashMap<String, Object> browserstackOptions = new HashMap<String, Object>();
                         browserstackOptions.put("os", "Windows");

@@ -36,6 +36,7 @@ public class HomePageStepDefinitions {
 
   @Then("page title should be {string}")
   public void pageTitleShouldBe(String titleExpected) {
+    log.info("STEP - Verify title is '" + titleExpected + "'");
       Assert.assertEquals(titleExpected, homePage.getTitle().getText());
   }
 }

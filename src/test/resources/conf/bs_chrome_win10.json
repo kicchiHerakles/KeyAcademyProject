@@ -1,0 +1,10 @@
+{
+  "browserName": "Chrome",
+  "browserVersion": "latest",
+  "project": "Key Academy Website v2",
+  "build": "alpha_0.1.7",
+  "name": "Home page title should be 'KEY ACADEMY'",
+  "browserstack.debug": "true",
+  "browserstack.console": "info",
+  "browserstack.networkLogs": "true"
+}

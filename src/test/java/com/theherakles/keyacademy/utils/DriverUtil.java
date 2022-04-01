@@ -3,10 +3,13 @@ package com.theherakles.keyacademy.utils;
 import com.theherakles.keyacademy.enums.BrowserType;
 import com.theherakles.keyacademy.exception.AutomationException;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import java.io.FileReader;
 import java.net.URL;
 import java.util.HashMap;
 import lombok.NoArgsConstructor;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -79,15 +82,10 @@ public class DriverUtil {
                         driverPool.set(new RemoteWebDriver(new URL(ConfigurationReaderUtil.getConfiguration().getRemoteGridUrl()), chromeOptions));
                         break;
                     case BS_DESKTOP_CHROME:
-                        DesiredCapabilities capabilities = new DesiredCapabilities();
-                        capabilities.setCapability("browserName", "Chrome");
-                        capabilities.setCapability("browserVersion", "latest");
-                        capabilities.setCapability("project", "Key Academy Website v2");//optional
-                        capabilities.setCapability("build", "alpha_0.1.7");//optional
-                        capabilities.setCapability("name", "Home page title should be 'KEY ACADEMY'");//optional
-                        capabilities.setCapability("browserstack.debug", "true");  // optional - for enabling visual logs
-                        capabilities.setCapability("browserstack.console", "info");  // optional - to enable console logs at the info level. You can also use other log levels here
-                        capabilities.setCapability("browserstack.networkLogs", "true");  // optional - to enable network logs to be logged
+                        JSONParser parser = new JSONParser();
+                        JSONObject testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_chrome_win10.json"));;
+
+                        DesiredCapabilities capabilities = new DesiredCapabilities(testConfig);
 
                         HashMap<String, Object> browserstackOptions = new HashMap<String, Object>();
                         browserstackOptions.put("os", "Windows");

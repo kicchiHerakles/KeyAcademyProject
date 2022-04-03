@@ -13,7 +13,10 @@ public enum BrowserType {
     INTERNET_EXPLORER(6, "internet-explorer"),
     EDGE(7, "edge"),
     SAFARI(8, "safari"),
-    BS_DESKTOP_CHROME(9, "bs-desktop-chrome");
+    IOS_PHONE(9, "ios-phone"),
+    IOS_TABLET(10, "ios-tablet"),
+    ANDROID_PHONE(11, "android-phone"),
+    ANDROID_TABLET(12,"android-tablet");
 
     private int typeId;
     private String name;

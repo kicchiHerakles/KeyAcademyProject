@@ -7,9 +7,6 @@ import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Set;
 import lombok.NoArgsConstructor;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.json.simple.JSONObject;
@@ -38,6 +35,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 @NoArgsConstructor
 public class DriverUtil {
 
+    private static final String USERNAME = "hseyinkeeci_OFjRua";
+    private static final String AUTOMATE_KEY = System.getenv("QepXX2yWg9cVpc27dGhy");
+    private static final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
     private static InheritableThreadLocal<WebDriver> driverPool = new InheritableThreadLocal<>();
 
     @NonNull
@@ -92,7 +92,7 @@ public class DriverUtil {
                             break;
                     }
                 }
-                else if (System.getProperty("isRemote") != null && System.getProperty("isRemote").equals("true")){
+                else if (isPropertyProvided("isRemote")){
                     JSONParser parser = new JSONParser();
                     JSONObject testConfig = null;
                     WebDriver driver = null;
@@ -100,32 +100,59 @@ public class DriverUtil {
                     HashMap<String, Object> browserstackOptions;
                     switch (browserType){
                         case CHROME:
-                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_chrome_win10.json"));
-
+                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_chrome_win.json"));
                             capabilities = prepareDesiredCapabilities(testConfig);
 
-                            browserstackOptions = new HashMap<String, Object>();
-                            browserstackOptions.put("os", "Windows");
-                            browserstackOptions.put("osVersion", "10");
+//                            browserstackOptions = new HashMap<String, Object>();
+//                            browserstackOptions.put("os", "Windows");
+//                            browserstackOptions.put("osVersion", "10");
+//                            capabilities.setCapability("bstack:options", browserstackOptions);
 
-                            capabilities.setCapability("bstack:options", browserstackOptions);
-                            driver = new RemoteWebDriver(new URL("https://hseyinkeeci_OFjRua:QepXX2yWg9cVpc27dGhy@hub-cloud.browserstack.com/wd/hub"), capabilities);
+                            driver = new RemoteWebDriver(new URL(URL), capabilities);
                             driverPool.set(driver);
                             break;
                         case FIREFOX:
-                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_firefox_win10.json"));
-
+                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_firefox_win.json"));
                             capabilities = prepareDesiredCapabilities(testConfig);
 
-                            browserstackOptions = new HashMap<String, Object>();
-                            browserstackOptions.put("os", "Windows");
-                            browserstackOptions.put("osVersion", "10");
+//                            browserstackOptions = new HashMap<String, Object>();
+//                            browserstackOptions.put("os", "Windows");
+//                            browserstackOptions.put("osVersion", "10");
+//                            capabilities.setCapability("bstack:options", browserstackOptions);
 
-                            capabilities.setCapability("bstack:options", browserstackOptions);
-                            driver = new RemoteWebDriver(new URL("https://hseyinkeeci_OFjRua:QepXX2yWg9cVpc27dGhy@hub-cloud.browserstack.com/wd/hub"), capabilities);
+                            driver = new RemoteWebDriver(new URL(URL), capabilities);
                             driverPool.set(driver);
                             break;
-
+                        case SAFARI:
+                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_safari_macos.json"));
+                            capabilities = prepareDesiredCapabilities(testConfig);
+                            driver = new RemoteWebDriver(new URL(URL), capabilities);
+                            driverPool.set(driver);
+                            break;
+                        case IOS_PHONE:
+                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_ios_phone.json"));
+                            capabilities = prepareDesiredCapabilities(testConfig);
+                            driver = new RemoteWebDriver(new URL(URL), capabilities);
+                            driverPool.set(driver);
+                            break;
+                        case IOS_TABLET:
+                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_ios_tablet.json"));
+                            capabilities = prepareDesiredCapabilities(testConfig);
+                            driver = new RemoteWebDriver(new URL(URL), capabilities);
+                            driverPool.set(driver);
+                            break;
+                        case ANDROID_PHONE:
+                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_android_phone.json"));
+                            capabilities = prepareDesiredCapabilities(testConfig);
+                            driver = new RemoteWebDriver(new URL(URL), capabilities);
+                            driverPool.set(driver);
+                            break;
+                        case ANDROID_TABLET:
+                            testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_android_tablet.json"));
+                            capabilities = prepareDesiredCapabilities(testConfig);
+                            driver = new RemoteWebDriver(new URL(URL), capabilities);
+                            driverPool.set(driver);
+                            break;
                     }
                 }
                 else
@@ -135,6 +162,10 @@ public class DriverUtil {
             e.printStackTrace();
         }
         return driverPool.get();
+    }
+
+    private static boolean isPropertyProvided(String target){
+        return System.getProperty(target) != null && System.getProperty(target).equals("true");
     }
 
     private static DesiredCapabilities prepareDesiredCapabilities(JSONObject testConfig){
@@ -148,76 +179,5 @@ public class DriverUtil {
     public static void closeDriver() {
         driverPool.get().quit();
         driverPool.remove();
-    }
-}
-
-class TestClass1 implements Runnable {
-    public void run() {
-        Hashtable<String, String> capsHashtable = new Hashtable<String, String>();
-        capsHashtable.put("device", "iPhone 12 Pro");
-        capsHashtable.put("real_mobile", "true");
-        capsHashtable.put("os_version", "14");
-        capsHashtable.put("build", "browserstack-build-1");
-        capsHashtable.put("name", "Thread 1");
-        mainTestClass r1 = new mainTestClass();
-        r1.executeTest(capsHashtable);
-    }
-}
-class TestClass2 implements Runnable {
-    public void run() {
-        Hashtable<String, String> capsHashtable = new Hashtable<String, String>();
-        capsHashtable.put("device", "Google Pixel 5");
-        capsHashtable.put("real_mobile", "true");
-        capsHashtable.put("os_version", "11.0");
-        capsHashtable.put("build", "browserstack-build-1");
-        capsHashtable.put("name", "Thread 2");
-        mainTestClass r2 = new mainTestClass();
-        r2.executeTest(capsHashtable);
-    }
-}
-
-class mainTestClass {
-    public static final String USERNAME = "hseyinkeeci_OFjRua";
-    public static final String AUTOMATE_KEY = "QepXX2yWg9cVpc27dGhy";
-    public static final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
-    public static void main(String[] args) throws Exception {
-        Thread object1 = new Thread(new TestClass1());
-        object1.start();
-        Thread object2 = new Thread(new TestClass2());
-        object2.start();
-    }
-    public void executeTest(Hashtable<String, String> capsHashtable) {
-        String key;
-        DesiredCapabilities caps = new DesiredCapabilities();
-        // Iterate over the hashtable and set the capabilities
-        Set<String> keys = capsHashtable.keySet();
-        Iterator<String> itr = keys.iterator();
-        while (itr.hasNext()) {
-            key = itr.next();
-            caps.setCapability(key, capsHashtable.get(key));
-        }
-        WebDriver driver;
-        try {
-            driver = new RemoteWebDriver(new URL(URL), caps);
-            JavascriptExecutor jse = (JavascriptExecutor)driver;
-            // Searching for 'BrowserStack' on google.com
-            driver.get("https://www.google.com");
-            WebElement element = driver.findElement(By.name("q"));
-            element.sendKeys("BrowserStack");
-            element.submit();
-            // Setting the status of test as 'passed' or 'failed' based on the condition; if title of the web page contains 'BrowserStack'
-            WebDriverWait wait = new WebDriverWait(driver, 5);
-            try {
-                wait.until(ExpectedConditions.titleContains("BrowserStack"));
-                jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"passed\", \"reason\": \"Title matched!\"}}");
-            }
-            catch(Exception e) {
-                jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"failed\", \"reason\": \"Title not matched\"}}");
-            }
-            System.out.println(driver.getTitle());
-            driver.quit();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
     }
 }

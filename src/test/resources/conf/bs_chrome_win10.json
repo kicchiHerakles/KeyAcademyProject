@@ -1,7 +1,0 @@
-{
-  "browserName": "Chrome",
-  "browserVersion": "latest",
-  "browserstack.debug": "true",
-  "browserstack.console": "info",
-  "browserstack.networkLogs": "true"
-}

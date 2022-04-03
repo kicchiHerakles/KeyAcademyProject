@@ -36,7 +36,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class DriverUtil {
 
     private static final String USERNAME = "hseyinkeeci_OFjRua";
-    private static final String AUTOMATE_KEY = System.getenv("QepXX2yWg9cVpc27dGhy");
+    private static final String AUTOMATE_KEY = "QepXX2yWg9cVpc27dGhy";
     private static final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
     private static InheritableThreadLocal<WebDriver> driverPool = new InheritableThreadLocal<>();
 

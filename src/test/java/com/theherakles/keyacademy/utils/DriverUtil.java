@@ -35,9 +35,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 @NoArgsConstructor
 public class DriverUtil {
 
-    private static final String USERNAME = "hseyinkeeci_OFjRua";
-    private static final String AUTOMATE_KEY = "QepXX2yWg9cVpc27dGhy";
-    private static final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
     private static InheritableThreadLocal<WebDriver> driverPool = new InheritableThreadLocal<>();
 
     @NonNull
@@ -93,6 +90,9 @@ public class DriverUtil {
                     }
                 }
                 else if (isPropertyProvided("isRemote")){
+                    String USERNAME = System.getenv("BROWSERSTACK_USERNAME");
+                    String AUTOMATE_KEY = System.getenv("BROWSERSTACK_ACCESS_KEY");
+                    String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
                     JSONParser parser = new JSONParser();
                     JSONObject testConfig = null;
                     WebDriver driver = null;
@@ -103,22 +103,12 @@ public class DriverUtil {
                             testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_chrome_win.json"));
                             capabilities = prepareDesiredCapabilities(testConfig);
 
-//                            browserstackOptions = new HashMap<String, Object>();
-//                            browserstackOptions.put("os", "Windows");
-//                            browserstackOptions.put("osVersion", "10");
-//                            capabilities.setCapability("bstack:options", browserstackOptions);
-
                             driver = new RemoteWebDriver(new URL(URL), capabilities);
                             driverPool.set(driver);
                             break;
                         case FIREFOX:
                             testConfig = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/bs_firefox_win.json"));
                             capabilities = prepareDesiredCapabilities(testConfig);
-
-//                            browserstackOptions = new HashMap<String, Object>();
-//                            browserstackOptions.put("os", "Windows");
-//                            browserstackOptions.put("osVersion", "10");
-//                            capabilities.setCapability("bstack:options", browserstackOptions);
 
                             driver = new RemoteWebDriver(new URL(URL), capabilities);
                             driverPool.set(driver);
@@ -169,10 +159,12 @@ public class DriverUtil {
     }
 
     private static DesiredCapabilities prepareDesiredCapabilities(JSONObject testConfig){
+        String buildName = System.getenv("BROWSERSTACK_BUILD_NAME");
         DesiredCapabilities capabilities = new DesiredCapabilities(testConfig);
         capabilities.setCapability("project", ConfigurationReaderUtil.getConfiguration().getProjectName());
-        capabilities.setCapability("build", ConfigurationReaderUtil.getConfiguration().getBuild());
+        //capabilities.setCapability("build", ConfigurationReaderUtil.getConfiguration().getBuild());
         capabilities.setCapability("name", "test name");
+        capabilities.setCapability("build", buildName); // CI/CD job name using BROWSERSTACK_BUILD_NAME env variable
         return capabilities;
     }
 

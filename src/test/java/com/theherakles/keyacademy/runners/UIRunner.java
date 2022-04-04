@@ -13,6 +13,6 @@ import org.junit.runner.RunWith;
         dryRun = false,
         tags = ""
 )
-public class SampleRunner {
+public class UIRunner {
 
 }

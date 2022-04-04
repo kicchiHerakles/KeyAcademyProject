@@ -10,3 +10,7 @@ Feature: Home Page Element Validations
       |       Services|
       |       About Us|
       |       Contact|
+
+  @HOME2
+  Scenario:
+    Then page title should be "KEY ACADEMY"

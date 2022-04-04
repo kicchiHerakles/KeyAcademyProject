@@ -7,9 +7,10 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         plugin = {"json:target/cucumber.json",
-                "html:target/default-html-reports"},
-        features = "src/test/resources/features",
-        glue = "com/theherakles/keyacademy/step_definitions",
+                "html:target/default-html-reports",
+                "rerun:target/rerun.txt"},
+        features = "src/test/resources/features/ui",
+        glue = "com/theherakles/keyacademy/step_definitions/ui",
         dryRun = false,
         tags = ""
 )

@@ -28,6 +28,14 @@ public class HomePageStepDefinitions {
     for (String menuName:menuNames) {
       log.info("STEP - Verify " + menuName + " is visible at navigation bar");
       Assert.assertTrue(menuName + " is not visible!", homePage.getNavMenuByName(menuName).isDisplayed());
+
+
     }
+  }
+
+  @Then("page title should be {string}")
+  public void pageTitleShouldBe(String titleExpected) {
+    log.info("STEP - Verify title is '" + titleExpected + "'");
+    Assert.assertEquals(titleExpected, homePage.getTitle().getText());
   }
 }

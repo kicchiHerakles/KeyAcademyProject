@@ -1,6 +1,5 @@
 package com.theherakles.keyacademy.step_definitions.ui;
 
-import com.theherakles.keyacademy.config.ApplicationConfig;
 import com.theherakles.keyacademy.pom.HomePage;
 import com.theherakles.keyacademy.utils.ConfigurationReaderUtil;
 import com.theherakles.keyacademy.utils.DriverUtil;
@@ -33,9 +32,17 @@ public class HomePageStepDefinitions {
     }
   }
 
-  @Then("page title should be {string}")
-  public void pageTitleShouldBe(String titleExpected) {
+  @Then("page name should be {string}")
+  public void pageNameShouldBe(String titleExpected) {
     log.info("STEP - Verify title is '" + titleExpected + "'");
-    Assert.assertEquals(titleExpected, homePage.getTitle().getText());
+    Assert.assertEquals(titleExpected, homePage.getPageName().getText());
+  }
+
+  @Then("user should see following buttons")
+  public void userShouldSeeFollowingButtons(List<String> buttonNames) {
+    for (String buttonName:buttonNames) {
+      log.info("STEP - Verify '" + buttonName + "' button is visible");
+      Assert.assertTrue(buttonName + " button is not visible", homePage.getNavButtonByName(buttonName).isDisplayed());
+    }
   }
 }

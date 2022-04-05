@@ -3,7 +3,7 @@ Feature: Home Page Element Validations
   Background:
     Given Home page is loaded
 
-    @KEY-1
+  @KEY-2 @Web-Desktop
   Scenario:
     Then user should see the following menus in the navigation bar
     |Courses|
@@ -11,6 +11,12 @@ Feature: Home Page Element Validations
       |       About Us|
       |       Contact|
 
-  @HOME2
+  @KEY-3 @Web-Desktop
   Scenario:
-    Then page title should be "KEY ACADEMY"
+    Then user should see following buttons
+    |CREATE AN ACCOUNT|
+    |SIGN IN|
+
+  @KEY-4 @Web-Desktop
+  Scenario:
+    Then page name should be "KEY ACADEMY"

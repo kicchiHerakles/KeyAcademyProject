@@ -15,6 +15,7 @@ public class HomePage extends NavHeaderComponent {
   }
 
   @FindBy(xpath = "//h1/b")
-  private WebElement title;
+  private WebElement pageName;
+
 
 }

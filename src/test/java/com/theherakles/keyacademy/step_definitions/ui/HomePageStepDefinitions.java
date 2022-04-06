@@ -25,7 +25,7 @@ public class HomePageStepDefinitions {
   @Then("user should see the following menus in the navigation bar")
   public void user_should_see_the_following_menus_in_the_navigation_bar(List<String> menuNames) {
     for (String menuName:menuNames) {
-      log.info("STEP - Verify " + menuName + " is visible at navigation bar");
+      log.info("VERIFY - " + menuName + " is visible at navigation bar");
       Assert.assertTrue(menuName + " is not visible!", homePage.getNavMenuByName(menuName).isDisplayed());
 
 
@@ -41,7 +41,7 @@ public class HomePageStepDefinitions {
   @Then("user should see following buttons")
   public void userShouldSeeFollowingButtons(List<String> buttonNames) {
     for (String buttonName:buttonNames) {
-      log.info("STEP - Verify '" + buttonName + "' button is visible");
+      log.info("VERIFY - '" + buttonName + "' button is visible");
       Assert.assertTrue(buttonName + " button is not visible", homePage.getNavButtonByName(buttonName).isDisplayed());
     }
   }

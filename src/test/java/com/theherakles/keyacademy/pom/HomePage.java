@@ -39,5 +39,11 @@ public class HomePage extends NavHeaderComponent {
     return actualSliderTitles;
   }
 
+  @FindBy(xpath = "(//footer)[2]/a")
+  private WebElement toTheTopButton;
+
+  @FindBy(xpath = "(//footer)[2]/a/i")
+  private WebElement arrowOfTopButton;
+
 
 }

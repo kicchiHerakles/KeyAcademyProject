@@ -9,8 +9,11 @@ import io.cucumber.java.en.Then;
 import java.net.http.WebSocket;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.cucumber.java.en.When;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 @Log4j2
@@ -54,5 +57,19 @@ public class HomePageStepDefinitions {
   public void userShouldSeeTheFollowingTitlesInOrderThroughTheHomePageSlider(List<String> expectedSliderTitles){
     log.info("VERIFY - HomePage slider titles are seen as expected");
     Assert.assertEquals(expectedSliderTitles,homePage.getActualSliderTitles());
+  }
+
+  @When("user scrolls down to the end of the page")
+  public void userScrollsDownToTheEndOfThePage() {
+    log.info("STEP - User scrolls down to the end of the page'");
+    JavascriptExecutor js = (JavascriptExecutor) DriverUtil.getDriver();
+    js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+  }
+
+  @Then("user should see -To the top- button with an arrow upwards")
+  public void userShouldSeeToTheTopButtonWithAnArrowUpwards() {
+    log.info("VERIFY - -To the top- button is visible with an arrow-up icon");
+    Assert.assertTrue(homePage.getToTheTopButton().isDisplayed() && homePage.getToTheTopButton().getText().equals("To the top") && homePage.getArrowOfTopButton().getAttribute("class").contains("fa-arrow-up"));
+
   }
 }

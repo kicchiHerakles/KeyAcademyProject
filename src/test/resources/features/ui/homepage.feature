@@ -27,3 +27,8 @@ Feature: Home Page Element Validations
       | English for Kids               |
       | Professional English Trainings |
       | YDS Course Started             |
+
+  @KEY-13 @Web-Desktop
+  Scenario:
+    When user scrolls down to the end of the page
+    Then user should see -To the top- button with an arrow upwards

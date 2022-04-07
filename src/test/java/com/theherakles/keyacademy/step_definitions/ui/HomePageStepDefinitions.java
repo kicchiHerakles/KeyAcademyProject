@@ -5,9 +5,13 @@ import com.theherakles.keyacademy.utils.ConfigurationReaderUtil;
 import com.theherakles.keyacademy.utils.DriverUtil;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+
+import java.net.http.WebSocket;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 
 @Log4j2
 public class HomePageStepDefinitions {
@@ -44,5 +48,11 @@ public class HomePageStepDefinitions {
       log.info("VERIFY - '" + buttonName + "' button is visible");
       Assert.assertTrue(buttonName + " button is not visible", homePage.getNavButtonByName(buttonName).isDisplayed());
     }
+  }
+
+  @Then("user should see the following titles in order through the Home Page slider")
+  public void userShouldSeeTheFollowingTitlesInOrderThroughTheHomePageSlider(List<String> expectedSliderTitles){
+    log.info("VERIFY - HomePage slider titles are seen as expected");
+    Assert.assertEquals(expectedSliderTitles,homePage.getActualSliderTitles());
   }
 }

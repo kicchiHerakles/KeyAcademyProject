@@ -34,8 +34,6 @@ public class HomePageStepDefinitions {
     for (String menuName:menuNames) {
       log.info("VERIFY - " + menuName + " is visible at navigation bar");
       Assert.assertTrue(menuName + " is not visible!", homePage.getNavMenuByName(menuName).isDisplayed());
-
-
     }
   }
 
@@ -70,6 +68,5 @@ public class HomePageStepDefinitions {
   public void userShouldSeeToTheTopButtonWithAnArrowUpwards() {
     log.info("VERIFY - -To the top- button is visible with an arrow-up icon");
     Assert.assertTrue(homePage.getToTheTopButton().isDisplayed() && homePage.getToTheTopButton().getText().equals("To the top") && homePage.getArrowOfTopButton().getAttribute("class").contains("fa-arrow-up"));
-
   }
 }

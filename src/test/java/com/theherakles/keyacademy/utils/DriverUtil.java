@@ -159,7 +159,9 @@ public class DriverUtil {
     }
 
     private static DesiredCapabilities prepareDesiredCapabilities(JSONObject testConfig){
-        String buildName = System.getenv("BROWSERSTACK_BUILD_NAME");
+        String buildName = "static build name";
+        if (isPropertyProvided("BROWSERSTACK_BUILD_NAME"))
+            buildName = System.getenv("BROWSERSTACK_BUILD_NAME");
         DesiredCapabilities capabilities = new DesiredCapabilities(testConfig);
         capabilities.setCapability("project", ConfigurationReaderUtil.getConfiguration().getProjectName());
         //capabilities.setCapability("build", ConfigurationReaderUtil.getConfiguration().getBuild());

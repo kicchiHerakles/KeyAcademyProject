@@ -1,7 +1,12 @@
 package com.theherakles.keyacademy.pom;
 
+import com.theherakles.keyacademy.annotations.Desktop;
+import com.theherakles.keyacademy.annotations.Phone;
 import com.theherakles.keyacademy.pom.components.NavHeaderComponent;
+import com.theherakles.keyacademy.utils.AbstractPage;
 import com.theherakles.keyacademy.utils.DriverUtil;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class HomePage extends NavHeaderComponent {
+@Desktop(HomePage.class)
+@Phone(HomePagePhone.class)
+public class HomePage extends AbstractPage {
   public HomePage(){
     super();
     PageFactory.initElements(DriverUtil.getDriver(), this);
@@ -44,6 +51,9 @@ public class HomePage extends NavHeaderComponent {
 
   @FindBy(xpath = "(//footer)[2]/a/i")
   private WebElement arrowOfTopButton;
+
+
+class HomePagePhone extends HomePage {
 
 
 }

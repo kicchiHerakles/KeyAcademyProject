@@ -1,13 +1,15 @@
 package com.theherakles.keyacademy.step_definitions.ui;
 
 import com.theherakles.keyacademy.pom.HomePage;
+import com.theherakles.keyacademy.pom.components.NavHeaderComponent;
 import com.theherakles.keyacademy.utils.ConfigurationReaderUtil;
 import com.theherakles.keyacademy.utils.DriverUtil;
+import com.theherakles.keyacademy.utils.PageFactory;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-
 import java.net.http.WebSocket;
 import java.util.ArrayList;
+import io.cucumber.java.en.When;
 import java.util.List;
 
 import io.cucumber.java.en.When;
@@ -19,21 +21,23 @@ import org.openqa.selenium.WebElement;
 @Log4j2
 public class HomePageStepDefinitions {
 
+  private NavHeaderComponent navHeaderComponent;
   private HomePage homePage;
 
   @Given("Home page is loaded")
   public void home_page_is_loaded() {
     log.info("STEP - Navigate to home page");
     DriverUtil.getDriver().get(ConfigurationReaderUtil.getConfiguration().getMainPageUrl());
-    homePage = new HomePage();
+    navHeaderComponent = PageFactory.create(NavHeaderComponent.class);
+    homePage = PageFactory.create(HomePage.class);
     log.info("STEP - Home Page loaded");
   }
 
   @Then("user should see the following menus in the navigation bar")
   public void user_should_see_the_following_menus_in_the_navigation_bar(List<String> menuNames) {
     for (String menuName:menuNames) {
-      log.info("VERIFY - " + menuName + " is visible at navigation bar");
-      Assert.assertTrue(menuName + " is not visible!", homePage.getNavMenuByName(menuName).isDisplayed());
+      log.info("STEP - Verify " + menuName + " is visible at navigation bar");
+      Assert.assertTrue(menuName + " is not visible!", navHeaderComponent.getNavMenuByName(menuName).isDisplayed());
     }
   }
 
@@ -46,8 +50,8 @@ public class HomePageStepDefinitions {
   @Then("user should see following buttons")
   public void userShouldSeeFollowingButtons(List<String> buttonNames) {
     for (String buttonName:buttonNames) {
-      log.info("VERIFY - '" + buttonName + "' button is visible");
-      Assert.assertTrue(buttonName + " button is not visible", homePage.getNavButtonByName(buttonName).isDisplayed());
+      log.info("STEP - Verify '" + buttonName + "' button is visible");
+      Assert.assertTrue(buttonName + " button is not visible", navHeaderComponent.getNavButtonByName(buttonName).isDisplayed());
     }
   }
 

@@ -7,16 +7,11 @@ import com.theherakles.keyacademy.utils.DriverUtil;
 import com.theherakles.keyacademy.utils.PageFactory;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import java.net.http.WebSocket;
-import java.util.ArrayList;
 import io.cucumber.java.en.When;
 import java.util.List;
-
-import io.cucumber.java.en.When;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 
 @Log4j2
 public class HomePageStepDefinitions {

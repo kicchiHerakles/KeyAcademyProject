@@ -30,6 +30,7 @@ public class HomePage extends AbstractPage {
   @FindBy(xpath="//span[@class='w3-white w3-padding-large w3-animate-bottom']")
   private List<WebElement> sliderTitles;
 
+
   //collects each HomePage slide's title text in a list
   public List<String> getActualSliderTitles(){
     List<String> actualSliderTitles = new ArrayList<>();

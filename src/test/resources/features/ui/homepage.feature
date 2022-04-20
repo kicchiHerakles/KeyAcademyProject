@@ -6,16 +6,16 @@ Feature: Home Page Element Validations
   @KEY-2 @Web-Desktop
   Scenario:
     Then user should see the following menus in the navigation bar
-    |Courses|
-      |       Services|
-      |       About Us|
-      |       Contact|
+      | Courses  |
+      | Services |
+      | About Us |
+      | Contact  |
 
   @KEY-3 @Web-Desktop
   Scenario:
     Then user should see following buttons
-    |CREATE AN ACCOUNT|
-    |SIGN IN|
+      | CREATE AN ACCOUNT |
+      | SIGN IN           |
 
   @KEY-4 @Web-Desktop
   Scenario:

@@ -2,6 +2,7 @@ package com.theherakles.keyacademy.step_definitions.ui;
 
 import com.theherakles.keyacademy.pom.HomePage;
 import com.theherakles.keyacademy.pom.components.NavHeaderComponent;
+import com.theherakles.keyacademy.utils.BrowserUtil;
 import com.theherakles.keyacademy.utils.ConfigurationReaderUtil;
 import com.theherakles.keyacademy.utils.DriverUtil;
 import com.theherakles.keyacademy.utils.PageFactory;
@@ -11,7 +12,7 @@ import io.cucumber.java.en.When;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
-import org.openqa.selenium.JavascriptExecutor;
+
 
 @Log4j2
 public class HomePageStepDefinitions {
@@ -52,15 +53,16 @@ public class HomePageStepDefinitions {
 
   @Then("user should see the following titles in order through the Home Page slider")
   public void userShouldSeeTheFollowingTitlesInOrderThroughTheHomePageSlider(List<String> expectedSliderTitles){
-    log.info("VERIFY - HomePage slider titles are seen as expected");
-    Assert.assertEquals(expectedSliderTitles,homePage.getActualSliderTitles());
+    for (int i = 0; i < expectedSliderTitles.size(); i++) {
+      log.info("STEP - Verify "+ (i+1) +". slide title is : " + expectedSliderTitles.get(i));
+      Assert.assertEquals((i+1) +". slide title " + expectedSliderTitles.get(i) +" is not visible", expectedSliderTitles.get(i),homePage.getActualSliderTitles().get(i));
+    }
   }
 
   @When("user scrolls down to the end of the page")
   public void userScrollsDownToTheEndOfThePage() {
     log.info("STEP - User scrolls down to the end of the page'");
-    JavascriptExecutor js = (JavascriptExecutor) DriverUtil.getDriver();
-    js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    BrowserUtil.scrollToTheEndOfThePage();
   }
 
   @Then("user should see -To the top- button with an arrow upwards")

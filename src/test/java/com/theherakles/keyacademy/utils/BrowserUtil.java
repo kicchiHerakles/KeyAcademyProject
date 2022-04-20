@@ -101,6 +101,14 @@ public class BrowserUtil {
     }
 
     /**
+     * Scrolls down to the end of the current page
+     */
+    public static void scrollToTheEndOfThePage(){
+        JavascriptExecutor js = (JavascriptExecutor) DriverUtil.getDriver();
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+
+    /**
      * Performs double click action on an element
      * @param element
      */

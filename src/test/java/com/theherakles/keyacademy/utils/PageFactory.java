@@ -28,8 +28,8 @@ public class PageFactory {
       }
 
       Class<?> platformClass = null;
-      if (clazz.isAnnotationPresent(annotation)) {
-        Annotation annotationInstance = clazz.getAnnotation(annotation);
+        if (clazz.isAnnotationPresent(annotation)) {
+          Annotation annotationInstance = clazz.getAnnotation(annotation);
         platformClass = (Class) annotationInstance.getClass().getMethod("value")
             .invoke(annotationInstance);
       }

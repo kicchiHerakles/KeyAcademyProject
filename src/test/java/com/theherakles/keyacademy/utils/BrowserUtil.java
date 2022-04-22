@@ -42,7 +42,7 @@ public class BrowserUtil {
             }
         };
         try {
-            WebDriverWait wait = new WebDriverWait(DriverUtil.getDriver(), timeOutInSeconds);
+            WebDriverWait wait = new WebDriverWait(DriverUtil.getDriver(), Duration.ofSeconds(timeOutInSeconds));
             wait.until(expectation);
         } catch (Throwable error) {
             error.printStackTrace();

@@ -5,7 +5,7 @@ import com.theherakles.keyacademy.enums.BrowserType;
 public class EnvironmentUtil {
 
   public static BrowserType getBrowserType(){
-     return BrowserType.getByName(System.getProperty("browser"));
+    return BrowserType.getByName(System.getProperty("browser"));
   }
 
   public static boolean isDesktopBrowser(){
